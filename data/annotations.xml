@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<annotations>
+  <version>1.1</version>
+  <meta>
+    <job>
+      <id>366095</id>
+      <size>19</size>
+      <mode>annotation</mode>
+      <overlap>0</overlap>
+      <bugtracker></bugtracker>
+      <created>2023-10-15 11:21:02.314521+00:00</created>
+      <updated>2023-10-15 11:29:05.541229+00:00</updated>
+      <subset>default</subset>
+      <start_frame>0</start_frame>
+      <stop_frame>18</stop_frame>
+      <frame_filter></frame_filter>
+      <segments>
+        <segment>
+          <id>366389</id>
+          <start>0</start>
+          <stop>18</stop>
+          <url>https://app.cvat.ai/api/jobs/366095</url>
+        </segment>
+      </segments>
+      <owner>
+        <username>shubham8</username>
+        <email>skpawar1305@gmail.com</email>
+      </owner>
+      <assignee></assignee>
+      <labels>
+        <label>
+          <name>estop</name>
+          <color>#64badb</color>
+          <type>any</type>
+          <attributes>
+          </attributes>
+        </label>
+      </labels>
+    </job>
+    <dumped>2023-10-15 11:29:25.857007+00:00</dumped>
+  </meta>
+  <image id="0" name="Clipped_image_20231015_123645.png" width="741" height="734">
+    <points label="estop" source="manual" occluded="0" points="71.30,69.54;660.96,73.06;77.46,663.60;666.24,660.96;393.41,349.41" z_order="0">
+    </points>
+  </image>
+  <image id="1" name="Clipped_image_20231015_123651.png" width="905" height="882">
+    <points label="estop" source="manual" occluded="0" points="157.47,138.54;768.74,148.06;86.62,730.77;815.27,743.46;458.88,213.63" z_order="0">
+    </points>
+  </image>
+  <image id="2" name="Clipped_image_20231015_123700.png" width="908" height="1077">
+    <points label="estop" source="manual" occluded="0" points="200.23,251.11;754.23,256.27;80.13,661.76;823.96,670.80;461.09,106.48" z_order="0">
+    </points>
+  </image>
+  <image id="3" name="Clipped_image_20231015_123706.png" width="873" height="1076">
+    <points label="estop" source="manual" occluded="0" points="204.30,273.46;695.86,299.26;79.16,465.69;795.20,491.49;464.92,28.32" z_order="0">
+    </points>
+  </image>
+  <image id="4" name="Clipped_image_20231015_123711.png" width="1007" height="987">
+    <points label="estop" source="manual" occluded="0" points="75.07,295.31;671.53,66.91;320.05,908.34;936.63,645.62;508.22,374.61" z_order="0">
+    </points>
+  </image>
+  <image id="5" name="Clipped_image_20231015_123716.png" width="822" height="1056">
+    <points label="estop" source="manual" occluded="0" points="72.34,255.82;585.15,231.76;82.47,604.02;758.62,528.05;380.03,69.69" z_order="0">
+    </points>
+  </image>
+  <image id="6" name="Clipped_image_20231015_123721.png" width="812" height="1036">
+    <points label="estop" source="manual" occluded="0" points="56.27,272.04;525.83,263.35;102.23,457.13;737.00,423.59;380.49,21.12" z_order="0">
+    </points>
+  </image>
+  <image id="7" name="Clipped_image_20231015_123725.png" width="502" height="497">
+    <points label="estop" source="manual" occluded="0" points="43.30,45.56;441.37,41.39;50.45,449.00;454.48,439.47;261.41,209.44" z_order="0">
+    </points>
+  </image>
+  <image id="8" name="Clipped_image_20231015_123729.png" width="607" height="658">
+    <points label="estop" source="manual" occluded="0" points="119.65,130.93;501.51,138.82;58.11,485.18;548.06,489.91;306.64,119.10" z_order="0">
+    </points>
+  </image>
+  <image id="9" name="Clipped_image_20231015_123733.png" width="644" height="739">
+    <points label="estop" source="manual" occluded="0" points="146.14,183.89;511.21,192.75;63.74,462.12;582.99,472.76;331.34,68.70" z_order="0">
+    </points>
+  </image>
+  <image id="10" name="Clipped_image_20231015_123737.png" width="672" height="778">
+    <points label="estop" source="manual" occluded="0" points="139.65,218.29;493.20,233.21;64.09,358.22;604.21,375.01;350.47,22.39" z_order="0">
+    </points>
+  </image>
+  <image id="11" name="Clipped_image_20231015_123742.png" width="608" height="574">
+    <points label="estop" source="manual" occluded="0" points="46.95,124.58;433.06,39.93;130.92,518.95;558.32,397.13;268.57,152.11" z_order="0">
+    </points>
+  </image>
+  <image id="12" name="Clipped_image_20231015_123746.png" width="649" height="801">
+    <points label="estop" source="manual" occluded="0" points="70.93,219.41;441.66,192.52;68.05,499.86;594.36,426.87;296.63,54.22" z_order="0">
+    </points>
+  </image>
+  <image id="13" name="Clipped_image_20231015_123751.png" width="670" height="851">
+    <points label="estop" source="manual" occluded="0" points="81.46,258.70;434.51,259.72;66.16,385.23;606.96,363.80;320.23,20.95" z_order="0">
+    </points>
+  </image>
+  <image id="14" name="Clipped_image_20231015_123800.png" width="984" height="971">
+    <points label="estop" source="manual" occluded="0" points="87.42,86.72;876.79,87.89;97.90,881.92;895.42,871.44;526.35,422.03" z_order="0">
+    </points>
+  </image>
+  <image id="15" name="Clipped_image_20231015_123804.png" width="1095" height="1283">
+    <points label="estop" source="manual" occluded="0" points="118.29,148.44;929.01,143.83;98.29,885.32;998.24,873.02;549.03,228.44" z_order="0">
+    </points>
+  </image>
+  <image id="16" name="Clipped_image_20231015_123810.png" width="1121" height="1447">
+    <points label="estop" source="manual" occluded="0" points="163.20,264.52;957.84,267.99;104.21,835.34;1020.30,826.67;567.46,158.69" z_order="0">
+    </points>
+  </image>
+  <image id="17" name="Clipped_image_20231015_123816.png" width="946" height="1265">
+    <points label="estop" source="manual" occluded="0" points="115.84,322.27;777.16,317.72;90.05,554.34;863.61,542.21;469.25,40.15" z_order="0">
+    </points>
+  </image>
+  <image id="18" name="Clipped_image_20231015_123848.png" width="1036" height="1256">
+    <points label="estop" source="manual" occluded="0" points="62.44,340.30;704.00,323.73;220.57,507.46;949.47,465.30;508.20,27.00" z_order="0">
+    </points>
+  </image>
+</annotations>
