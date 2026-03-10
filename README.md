@@ -1,12 +1,12 @@
-## Synthetic Data Generation for Yolov8 Pose (Keypoints) detection for Rescue League autonomous dexterity
+## Synthetic Data Generation for Yolov8 Object Detection for Rescue League autonomous dexterity
 
 Follow data/steps.md
 
 Run all in create_synthetic_dataset.ipynb
 
-The generated dataset can be directly used to train a keypoints detection model
+The generated dataset can be directly used to train an object detection model
 
 ### Notes
 1) Samsung phone is used generated the clipped images. Skipping all the manual work.
 
-2) https://www.cvat.ai/ is used to mark the keypoints and to generate annotations.xml
+2) https://docs.ultralytics.com/tasks/detect/ for YOLOv8 object detection format reference.
