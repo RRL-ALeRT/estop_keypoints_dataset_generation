@@ -1,30 +1,42 @@
 import cv2
 import os
 
-# Set the class name to rotate images for.
-# Change this value for each class you prepare (e.g. "estop", "button", "valve").
-class_name = "estop"
+# Rotates images for ALL class subdirectories inside images/ in one run.
+# For each class, adds 90°, 180°, and 270° rotated copies alongside the originals.
 
-# Process all images in the class-specific images folder
-images_folder = os.path.join("images", class_name)
+images_root = "images"
 
-for image_filename in os.listdir(images_folder):
-    if image_filename.endswith(".png"):
-        # Load the image
+class_dirs = sorted([
+    d for d in os.listdir(images_root)
+    if os.path.isdir(os.path.join(images_root, d))
+])
+print(f"Found classes: {class_dirs}")
+
+for class_name in class_dirs:
+    images_folder = os.path.join(images_root, class_name)
+    rotated = 0
+
+    for image_filename in os.listdir(images_folder):
+        # Only rotate original images (skip files that already end with _90/_180/_270)
+        if not image_filename.endswith(".png"):
+            continue
+        name_no_ext = os.path.splitext(image_filename)[0]
+        if name_no_ext.endswith(("_90", "_180", "_270")):
+            continue
+
         image_path = os.path.join(images_folder, image_filename)
         image = cv2.imread(image_path)
 
-        image_name_without_extension = os.path.splitext(image_filename)[0]
-
-        # Rotate the image by 90, 180, and 270 degrees
         for cv2_angle, angle in [
             (cv2.ROTATE_90_CLOCKWISE, 90),
             (cv2.ROTATE_180, 180),
             (cv2.ROTATE_90_COUNTERCLOCKWISE, 270),
         ]:
             rotated_image = cv2.rotate(image, cv2_angle)
+            rotated_path = os.path.join(images_folder, f"{name_no_ext}_{angle}.png")
+            cv2.imwrite(rotated_path, rotated_image)
+            rotated += 1
 
-            # Save the rotated image
-            rotated_image_filename = f"{image_name_without_extension}_{angle}.png"
-            rotated_image_path = os.path.join(images_folder, rotated_image_filename)
-            cv2.imwrite(rotated_image_path, rotated_image)
+    print(f"  Class '{class_name}': {rotated} rotated images added to {images_folder}/")
+
+print("Done.")

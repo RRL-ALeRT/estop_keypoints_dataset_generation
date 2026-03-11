@@ -7,24 +7,21 @@ The generated dataset can be directly used to train a YOLOv8 object detection mo
 
 ### Multi-Class Support
 
-The notebook supports generating datasets with **multiple object classes**.  
-The **folder name is the class name** — create one subdirectory per class:
+The notebook supports generating datasets with **multiple object classes** in a single run.  
+The **folder name is the class name** — place clipped images in per-class subdirectories:
 
 ```
 data/
-├── bg/                  # background images (shared)
-├── images/
-│   ├── button/          # class "button"
-│   └── estop/           # class "estop"
-└── masks/
-    ├── button/
-    └── estop/
+├── bg/                     # background images (shared)
+├── clipped_images/
+│   ├── estop/              # raw RGBA PNGs for "estop"
+│   └── button/             # raw RGBA PNGs for "button"
+├── images/                 # auto-populated by remove_transparency_samsung.py
+└── masks/                  # auto-populated by cropped_images_to_masks.py
 ```
 
-The notebook detects all class subdirectories automatically. YOLO integer class IDs are derived
-from the sorted alphabetical order of class names at label-writing time — no manual ID assignment
-needed.  
-See `data/steps.md` for the full per-class data-preparation workflow.
+Run the three preparation scripts once for all classes, then run the notebook end-to-end.  
+See `data/steps.md` for the full workflow.
 
 ### Notes
 

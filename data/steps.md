@@ -1,55 +1,51 @@
 Preparing data for create_synthetic_dataset.ipynb
 
-The notebook supports one or more object classes. The **folder name is the class name** — each
-subdirectory inside `data/images/` and `data/masks/` is one class, and the directory name is used
-directly as the class label throughout the pipeline.
+The **folder name is the class name**. Place your clipped images in per-class subdirectories and
+run the three preparation scripts **once** — they process all classes in a single run.
 
-## Per-class data preparation (repeat for each class)
+## Step 1 – Organise clipped images
 
-1) Copy background images into the `bg/` folder (shared across all classes).
+Copy your raw RGBA PNG cutouts from the Samsung phone into `clipped_images/<class_name>/`:
 
-2) Copy clipped images for a class from the Samsung phone into a temporary `clipped_images/`
-   folder. These are the raw RGBA PNG cutouts of the object.
+```
+data/
+└── clipped_images/
+    ├── estop/    <- RGBA PNGs for the "estop" class
+    └── button/   <- RGBA PNGs for the "button" class
+```
 
-3) Run `remove_transparency_samsung.py`. It converts RGBA to RGB and saves images to
-   `images/<class_name>/`. Edit the `class_name` variable in the script to match your class name
-   before running.
+Also copy your background images into `bg/` (shared across all classes).
 
-4) Run `rotate_by_90_180_270.py`. It generates 3 additional rotated images (90°, 180°, 270°)
-   for each image. Edit the `class_name` variable in the script to match your class name.
+## Step 2 – Run the preparation scripts (one shot for all classes)
 
-5) Run `cropped_images_to_masks.py`. It creates binary masks in `masks/<class_name>/`.
-   Edit the `class_name` variable in the script to match your class name.
+```bash
+cd data
+python remove_transparency_samsung.py  # converts RGBA -> RGB, writes images/*/
+python rotate_by_90_180_270.py         # adds 90/180/270° rotated copies to images/*/
+python cropped_images_to_masks.py      # generates binary masks in masks/*/
+```
 
-## Single-class example
-
-For a single class named `estop`:
+After these three scripts complete, your data directory will look like:
 
 ```
 data/
 ├── bg/
+├── clipped_images/
+│   ├── estop/
+│   └── button/
 ├── images/
-│   └── estop/     <- class "estop" (step 3 output)
+│   ├── estop/
+│   └── button/
 └── masks/
-    └── estop/     <- step 5 output
+    ├── estop/
+    └── button/
 ```
 
-## Multi-class example
+## Step 3 – Generate the dataset
 
-For two classes `estop` and `button`:
+Run all cells in `create_synthetic_dataset.ipynb`. The notebook auto-detects all class
+subdirectories and generates the full train/val dataset in one go.
 
-```
-data/
-├── bg/
-├── images/
-│   ├── button/    <- class "button"
-│   └── estop/     <- class "estop"
-└── masks/
-    ├── button/
-    └── estop/
-```
-
-Repeat steps 2–5 for each class. The notebook detects all class subdirectories automatically;
-no manual ID assignment is needed.
+To add a new class later, add `clipped_images/<new_class>/` and re-run the three scripts.
 
 
