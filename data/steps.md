@@ -1,14 +1,51 @@
 Preparing data for create_synthetic_dataset.ipynb
 
-1) copy background images in 'bg' folder
+The **folder name is the class name**. Place your clipped images in per-class subdirectories and
+run the three preparation scripts **once** — they process all classes in a single run.
 
-2) copy clipped images from Samsung phone to 'clipped_images' folder
+## Step 1 – Organise clipped images
 
-3) run remove_transparency_samsung.py. It'll convert rgba to rgb correctly and images are copied to 'images' folder
+Copy your raw RGBA PNG cutouts from the Samsung phone into `clipped_images/<class_name>/`:
 
-4) annotations.xml is generated using cvat. Run cvat_annotations_to_json.py. It'll create 'keypoints' folder with keypoints in json format.
+```
+data/
+└── clipped_images/
+    ├── estop/    <- RGBA PNGs for the "estop" class
+    └── button/   <- RGBA PNGs for the "button" class
+```
 
-5) run rotate_by_90_180_270.py. It'll generate 3 additional images and corresponding transformed keypoints.
+Also copy your background images into `bg/` (shared across all classes).
 
-6) run cropped_images_to_masks.py. It'll create 'masks' folder with masks of the previously generated images.
+## Step 2 – Run the preparation scripts (one shot for all classes)
+
+```bash
+cd data
+python remove_transparency_samsung.py  # converts RGBA -> RGB, writes images/*/
+python rotate_by_90_180_270.py         # adds 90/180/270° rotated copies to images/*/
+python cropped_images_to_masks.py      # generates binary masks in masks/*/
+```
+
+After these three scripts complete, your data directory will look like:
+
+```
+data/
+├── bg/
+├── clipped_images/
+│   ├── estop/
+│   └── button/
+├── images/
+│   ├── estop/
+│   └── button/
+└── masks/
+    ├── estop/
+    └── button/
+```
+
+## Step 3 – Generate the dataset
+
+Run all cells in `create_synthetic_dataset.ipynb`. The notebook auto-detects all class
+subdirectories and generates the full train/val dataset in one go.
+
+To add a new class later, add `clipped_images/<new_class>/` and re-run the three scripts.
+
 

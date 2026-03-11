@@ -1,103 +1,42 @@
 import cv2
-import json
 import os
 
+# Rotates images for ALL class subdirectories inside images/ in one run.
+# For each class, adds 90°, 180°, and 270° rotated copies alongside the originals.
 
-# Function to rotate the image and points
-def rotate_image_and_points(image, points, angle):
-    # Rotate the image
-    rotated_image = cv2.rotate(image, angle)
+images_root = "images"
 
-    # Rotate the points accordingly, '1' for visible
-    if angle == cv2.ROTATE_90_CLOCKWISE:
-        rotated_points = [(image.shape[0] - point[1], point[0], 1) for point in points]
-    elif angle == cv2.ROTATE_180:
-        rotated_points = [
-            (image.shape[1] - point[0], image.shape[0] - point[1], 1)
-            for point in points
-        ]
-    elif angle == cv2.ROTATE_90_COUNTERCLOCKWISE:
-        rotated_points = [(point[1], image.shape[1] - point[0], 1) for point in points]
+class_dirs = sorted([
+    d for d in os.listdir(images_root)
+    if os.path.isdir(os.path.join(images_root, d))
+])
+print(f"Found classes: {class_dirs}")
 
-    return rotated_image, rotated_points
+for class_name in class_dirs:
+    images_folder = os.path.join(images_root, class_name)
+    rotated = 0
 
+    for image_filename in os.listdir(images_folder):
+        # Only rotate original images (skip files that already end with _90/_180/_270)
+        if not image_filename.endswith(".png"):
+            continue
+        name_no_ext = os.path.splitext(image_filename)[0]
+        if name_no_ext.endswith(("_90", "_180", "_270")):
+            continue
 
-# Process all images in the "images" folder
-images_folder = "images"
-keypoints_folder = "keypoints"
-
-for image_filename in os.listdir(images_folder):
-    if image_filename.endswith(".png"):
-        # Load the image
         image_path = os.path.join(images_folder, image_filename)
         image = cv2.imread(image_path)
 
-        # Construct the path to the JSON file based on the image file's name
-        image_name_without_extension = os.path.splitext(image_filename)[0]
-        json_filename = image_name_without_extension + ".json"
-        json_path = os.path.join(keypoints_folder, json_filename)
-
-        # Read points from the JSON file
-        with open(json_path, "r") as json_file:
-            json_data = json.load(json_file)
-
-        # Extract the label and keypoints from the JSON data
-        label = json_data["label"]
-        keypoints = json_data["keypoints"]
-
-        # Rotate the image and points by 90, 180, and 270 degrees
-        rotated_images = []
-        rotated_json_data = []
-        for angle in [
-            cv2.ROTATE_90_CLOCKWISE,
-            cv2.ROTATE_180,
-            cv2.ROTATE_90_COUNTERCLOCKWISE,
+        for cv2_angle, angle in [
+            (cv2.ROTATE_90_CLOCKWISE, 90),
+            (cv2.ROTATE_180, 180),
+            (cv2.ROTATE_90_COUNTERCLOCKWISE, 270),
         ]:
-            rotated_image, rotated_points = rotate_image_and_points(
-                image, keypoints, angle
-            )
+            rotated_image = cv2.rotate(image, cv2_angle)
+            rotated_path = os.path.join(images_folder, f"{name_no_ext}_{angle}.png")
+            cv2.imwrite(rotated_path, rotated_image)
+            rotated += 1
 
-            if angle == cv2.ROTATE_90_CLOCKWISE:
-                angle = 90
-            elif angle == cv2.ROTATE_180:
-                angle = 180
-            elif angle == cv2.ROTATE_90_COUNTERCLOCKWISE:
-                angle = 270
+    print(f"  Class '{class_name}': {rotated} rotated images added to {images_folder}/")
 
-            # # Modify the sequence of rotated points for each rotation
-            if angle == 90:
-                rotated_points = [
-                    rotated_points[2],
-                    rotated_points[0],
-                    rotated_points[3],
-                    rotated_points[1],
-                    rotated_points[4],
-                ]
-            elif angle == 180:
-                rotated_points = [
-                    rotated_points[3],
-                    rotated_points[2],
-                    rotated_points[1],
-                    rotated_points[0],
-                    rotated_points[4],
-                ]
-            elif angle == 270:
-                rotated_points = [
-                    rotated_points[1],
-                    rotated_points[3],
-                    rotated_points[0],
-                    rotated_points[2],
-                    rotated_points[4],
-                ]
-
-            # Save the rotated image
-            rotated_image_filename = f"{image_name_without_extension}_{angle}.png"
-            rotated_image_path = os.path.join(images_folder, rotated_image_filename)
-            cv2.imwrite(rotated_image_path, rotated_image)
-
-            # Update the JSON data for the rotated image
-            rotated_json = {"label": label, "keypoints": rotated_points}
-            rotated_json_filename = f"{image_name_without_extension}_{angle}.json"
-            rotated_json_path = os.path.join(keypoints_folder, rotated_json_filename)
-            with open(rotated_json_path, "w") as rotated_json_file:
-                json.dump(rotated_json, rotated_json_file, indent=4)
+print("Done.")
