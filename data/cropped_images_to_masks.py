@@ -1,13 +1,16 @@
 import cv2
 import os
 
+# Set the class name. Masks will be saved to masks/<class_name>/
+# Change this value for each class you prepare (e.g. "estop", "button", "valve").
+class_name = "estop"
+
 # Define the input and output folders
-input_folder = "images"
-output_folder = "masks"
+input_folder = os.path.join("images", class_name)
+output_folder = os.path.join("masks", class_name)
 
 # Create the output folder if it doesn't exist
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
+os.makedirs(output_folder, exist_ok=True)
 
 # Loop through all files in the input folder
 for filename in os.listdir(input_folder):

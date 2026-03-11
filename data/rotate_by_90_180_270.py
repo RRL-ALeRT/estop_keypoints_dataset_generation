@@ -1,9 +1,12 @@
 import cv2
 import os
 
+# Set the class name to rotate images for.
+# Change this value for each class you prepare (e.g. "estop", "button", "valve").
+class_name = "estop"
 
-# Process all images in the "images" folder
-images_folder = "images"
+# Process all images in the class-specific images folder
+images_folder = os.path.join("images", class_name)
 
 for image_filename in os.listdir(images_folder):
     if image_filename.endswith(".png"):

@@ -1,12 +1,53 @@
 Preparing data for create_synthetic_dataset.ipynb
 
-1) copy background images in 'bg' folder
+The notebook supports one or more object classes. Each class requires its own subfolder inside
+`data/images/` and `data/masks/`. Class IDs are assigned by sorted alphabetical order of the
+subdirectory names (e.g. `button` → 0, `estop` → 1).
 
-2) copy clipped images from Samsung phone to 'clipped_images' folder
+## Per-class data preparation (repeat for each class)
 
-3) run remove_transparency_samsung.py. It'll convert rgba to rgb correctly and images are copied to 'images' folder
+1) Copy background images into the `bg/` folder (shared across all classes).
 
-4) run rotate_by_90_180_270.py. It'll generate 3 additional rotated images (90, 180, 270 degrees) for each image.
+2) Copy clipped images for a class from the Samsung phone into a temporary `clipped_images/`
+   folder. These are the raw RGBA PNG cutouts of the object.
 
-5) run cropped_images_to_masks.py. It'll create 'masks' folder with masks of the previously generated images.
+3) Run `remove_transparency_samsung.py`. It converts RGBA to RGB and saves images to
+   `images/<class_name>/`. Edit the `class_name` variable in the script to match your class name
+   before running.
+
+4) Run `rotate_by_90_180_270.py`. It generates 3 additional rotated images (90°, 180°, 270°)
+   for each image. Edit the `class_name` variable in the script to match your class name.
+
+5) Run `cropped_images_to_masks.py`. It creates binary masks in `masks/<class_name>/`.
+   Edit the `class_name` variable in the script to match your class name.
+
+## Single-class example
+
+For a single class named `estop`:
+
+```
+data/
+├── bg/
+├── images/
+│   └── estop/     <- step 3 output
+└── masks/
+    └── estop/     <- step 5 output
+```
+
+## Multi-class example
+
+For two classes `estop` and `button`:
+
+```
+data/
+├── bg/
+├── images/
+│   ├── button/    <- class 0
+│   └── estop/     <- class 1
+└── masks/
+    ├── button/
+    └── estop/
+```
+
+Repeat steps 2–5 for each class, directing outputs to the appropriate subdirectory.
 

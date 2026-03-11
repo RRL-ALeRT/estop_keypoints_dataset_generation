@@ -2,15 +2,18 @@ import os
 import cv2
 import numpy as np
 
-# Set the path to the folder containing your images
+# Set the class name. Images will be saved to images/<class_name>/
+# Change this value for each class you prepare (e.g. "estop", "button", "valve").
+class_name = "estop"
+
+# Set the path to the folder containing your clipped RGBA images
 input_folder = "clipped_images"
 
-# Set the path to the folder where you want to save the modified images
-output_folder = "images"
+# Output folder for this class
+output_folder = os.path.join("images", class_name)
 
 # Ensure the output folder exists, create it if not
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
+os.makedirs(output_folder, exist_ok=True)
 
 # Define the color to replace white transparent pixels (black in BGR format)
 replacement_color = (0, 0, 0)
