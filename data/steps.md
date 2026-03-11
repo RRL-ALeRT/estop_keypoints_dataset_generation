@@ -1,8 +1,8 @@
 Preparing data for create_synthetic_dataset.ipynb
 
-The notebook supports one or more object classes. Each class requires its own subfolder inside
-`data/images/` and `data/masks/`. Class IDs are assigned by sorted alphabetical order of the
-subdirectory names (e.g. `button` → 0, `estop` → 1).
+The notebook supports one or more object classes. The **folder name is the class name** — each
+subdirectory inside `data/images/` and `data/masks/` is one class, and the directory name is used
+directly as the class label throughout the pipeline.
 
 ## Per-class data preparation (repeat for each class)
 
@@ -29,7 +29,7 @@ For a single class named `estop`:
 data/
 ├── bg/
 ├── images/
-│   └── estop/     <- step 3 output
+│   └── estop/     <- class "estop" (step 3 output)
 └── masks/
     └── estop/     <- step 5 output
 ```
@@ -42,12 +42,14 @@ For two classes `estop` and `button`:
 data/
 ├── bg/
 ├── images/
-│   ├── button/    <- class 0
-│   └── estop/     <- class 1
+│   ├── button/    <- class "button"
+│   └── estop/     <- class "estop"
 └── masks/
     ├── button/
     └── estop/
 ```
 
-Repeat steps 2–5 for each class, directing outputs to the appropriate subdirectory.
+Repeat steps 2–5 for each class. The notebook detects all class subdirectories automatically;
+no manual ID assignment is needed.
+
 
